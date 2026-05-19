@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Forge Hosting Blog</title>
+    <link>https://jarviscli.dev/blog</link>
+    <description>Game server hosting tutorials, guides, and news from the Forge Hosting team.</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 19 May 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://jarviscli.dev/blog/rss.xml" rel="self" type="application/rss+xml"/>
+    
+    <item>
+      <title>How to Host a Minecraft Server for Free in 2026 (Step-by-Step)</title>
+      <link>https://jarviscli.dev/blog/how-to-host-minecraft-server-free</link>
+      <description>Complete guide to setting up your own Minecraft server — Paper, Forge, Fabric, or Bedrock — in under 5 minutes with Forge Hosting. No credit card required.</description>
+      <pubDate>Mon, 19 May 2026 00:00:00 +0000</pubDate>
+      <guid>https://jarviscli.dev/blog/how-to-host-minecraft-server-free</guid>
+      <category>Tutorial</category>
+    </item>
+    
+    <item>
+      <title>10 Best Free Game Server Hosting Providers in 2026</title>
+      <link>https://jarviscli.dev/blog/best-free-game-server-hosting-2026</link>
+      <description>We compared the top free game server hosting platforms — features, performance, game support, and limitations. Here's which ones are actually worth using.</description>
+      <pubDate>Mon, 19 May 2026 00:00:00 +0000</pubDate>
+      <guid>https://jarviscli.dev/blog/best-free-game-server-hosting-2026</guid>
+      <category>Comparison</category>
+    </item>
+    
+    <item>
+      <title>Forge vs Pterodactyl: Which Game Server Panel Is Better?</title>
+      <link>https://jarviscli.dev/blog/forge-vs-pterodactyl-which-panel-is-better</link>
+      <description>A detailed comparison of Forge Panel and Pterodactyl/Pelican — features, performance, ease of use, and why hosting providers are switching.</description>
+      <pubDate>Mon, 19 May 2026 00:00:00 +0000</pubDate>
+      <guid>https://jarviscli.dev/blog/forge-vs-pterodactyl-which-panel-is-better</guid>
+      <category>Comparison</category>
+    </item>
+    
+    <item>
+      <title>How to Set Up a Terraria Server for Free</title>
+      <link>https://jarviscli.dev/blog/how-to-set-up-terraria-server</link>
+      <description>Host a Terraria server for you and your friends in minutes. Supports tModLoader, custom worlds, and 24/7 uptime.</description>
+      <pubDate>Mon, 19 May 2026 00:00:00 +0000</pubDate>
+      <guid>https://jarviscli.dev/blog/how-to-set-up-terraria-server</guid>
+      <category>Tutorial</category>
+    </item>
+    
+    <item>
+      <title>How to Host a Discord Bot for Free 24/7</title>
+      <link>https://jarviscli.dev/blog/host-discord-bot-free-24-7</link>
+      <description>Stop running your bot on your PC. Deploy your Node.js, Python, or Java Discord bot to the cloud for free with always-on uptime.</description>
+      <pubDate>Mon, 19 May 2026 00:00:00 +0000</pubDate>
+      <guid>https://jarviscli.dev/blog/host-discord-bot-free-24-7</guid>
+      <category>Tutorial</category>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Hosting — Power Your Servers</title>
+    <meta name="description" content="Free game server, bot, and web hosting powered by Forge. Deploy in seconds with our powerful panel. Get your own private node starting at $12.99/mo.">
+    <link rel="icon" href="/forge.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-primary: #020617;
+            --bg-secondary: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.7);
+            --border-color: rgba(251, 146, 60, 0.12);
+            --border-hover: rgba(251, 146, 60, 0.3);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #f97316;
+            --accent-light: #fb923c;
+            --accent-glow: rgba(249, 115, 22, 0.15);
+            --accent-dark: #ea580c;
+        }
+
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ─── AMBIENT BACKGROUND ─── */
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .ambient-bg::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+        .ambient-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, rgba(249,115,22,0.04) 0%, transparent 70%);
+            animation: float 25s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -40px); }
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            background: rgba(2, 6, 23, 0.8);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        .nav-brand svg {
+            width: 36px;
+            height: 36px;
+        }
+        .nav-brand span {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent-light); }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(249, 115, 22, 0.4);
+        }
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            border-color: var(--border-hover);
+            background: rgba(15, 23, 42, 0.9);
+        }
+        .btn-large {
+            padding: 0.85rem 2rem;
+            font-size: 1rem;
+            border-radius: 12px;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+        .hero-content {
+            max-width: 800px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            font-size: 0.8rem;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse-dot 2s ease infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent-light), var(--accent), #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-light);
+        }
+        .hero-stat .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* ─── SECTIONS ─── */
+        section {
+            padding: 6rem 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ─── FEATURES ─── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--accent-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+        }
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ─── HOW IT WORKS ─── */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            counter-reset: step;
+        }
+        .step {
+            position: relative;
+            padding: 2rem;
+            counter-increment: step;
+        }
+        .step::before {
+            content: counter(step);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+        }
+        .step h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ─── PRICING ─── */
+        .pricing-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        .pricing-toggle span {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+        .pricing-toggle span.active {
+            color: var(--text-primary);
+        }
+        .toggle-switch {
+            position: relative;
+            width: 56px;
+            height: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent);
+            transition: transform 0.3s ease;
+        }
+        .toggle-switch.yearly::after {
+            transform: translateX(26px);
+        }
+        .toggle-switch.yearly {
+            border-color: var(--accent);
+        }
+        .save-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .pricing-card {
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .pricing-card.featured {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(249, 115, 22, 0.1);
+            transform: scale(1.03);
+        }
+        .pricing-card.featured:hover {
+            transform: scale(1.03) translateY(-4px);
+        }
+        .pricing-card.featured::before {
+            content: 'BEST VALUE';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.3rem 1rem;
+            border-radius: 100px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        .pricing-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .pricing-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 0.5rem 0;
+            line-height: 1.1;
+        }
+        .pricing-price .currency {
+            font-size: 1.5rem;
+            font-weight: 700;
+            vertical-align: super;
+        }
+        .pricing-price .period {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .pricing-equiv {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .pricing-features {
+            list-style: none;
+            margin: 1.5rem 0 2rem;
+            flex-grow: 1;
+        }
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .pricing-card .btn { width: 100%; justify-content: center; }
+        .addon-note {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .addon-note p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .addon-note strong {
+            color: var(--accent-light);
+        }
+
+        /* ─── CTA ─── */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+        .cta-box {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(15,23,42,0.9) 100%);
+            border: 1px solid var(--border-color);
+        }
+        .cta-box h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        .cta-box p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--accent-light); }
+
+        /* ─── MOBILE ─── */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        @media (max-width: 900px) {
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+            .pricing-card.featured { transform: none; }
+            .pricing-card.featured:hover { transform: translateY(-4px); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .hero h1 { font-size: 2.2rem; }
+            .cta-box { padding: 2.5rem 1.5rem; }
+            .footer-inner { flex-direction: column; text-align: center; }
+        }
+    </style>
+    <!-- ═══ SEO & SOCIAL META ═══ -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://jarviscli.dev/">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jarviscli.dev/">
+    <meta property="og:title" content="Forge Hosting — Free Game Server, Bot & Web Hosting">
+    <meta property="og:description" content="Deploy Minecraft, Terraria, Rust, and 350+ game servers in seconds — completely free. Or get your own private node starting at $12.99/mo. Powered by Forge Panel.">
+    <meta property="og:image" content="https://jarviscli.dev/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Forge Hosting">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Forge Hosting — Free Game Server, Bot & Web Hosting">
+    <meta name="twitter:description" content="Deploy game servers in seconds — completely free. 350+ eggs, instant deployment, your own private node from $12.99/mo.">
+    <meta name="twitter:image" content="https://jarviscli.dev/og-image.png">
+    
+    <!-- Additional SEO -->
+    <meta name="author" content="Forge Hosting">
+    <meta name="theme-color" content="#f97316">
+    <meta name="keywords" content="free game server hosting, minecraft server hosting, terraria server hosting, rust server hosting, game server panel, bot hosting, web hosting, forge panel, pterodactyl alternative, pelican alternative, free hosting panel">
+    <link rel="alternate" type="application/rss+xml" title="Forge Hosting Blog" href="https://jarviscli.dev/blog/rss.xml">
+    
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Forge Hosting",
+        "url": "https://jarviscli.dev",
+        "logo": "https://jarviscli.dev/forge.svg",
+        "description": "Free game server, bot, and web hosting powered by Forge Panel. Deploy in seconds.",
+        "email": "everest@jarviscli.dev",
+        "sameAs": [
+            "https://discord.gg/forgehosting"
+        ]
+    }
+    </script>
+    
+    <!-- Structured Data: WebSite (enables sitelinks search) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Forge Hosting",
+        "url": "https://jarviscli.dev",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://jarviscli.dev/blog?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <!-- Structured Data: Product (for pricing rich results) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Forge Private Node",
+        "description": "Your own dedicated game server node with 10 server slots, full root access, and 24/7 uptime.",
+        "brand": {
+            "@type": "Brand",
+            "name": "Forge Hosting"
+        },
+        "offers": [
+            {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "name": "Free Tier",
+                "description": "Free game, bot, and web server hosting on shared nodes",
+                "availability": "https://schema.org/InStock"
+            },
+            {
+                "@type": "Offer",
+                "price": "12.99",
+                "priceCurrency": "USD",
+                "priceValidUntil": "2027-12-31",
+                "name": "Private Node",
+                "description": "Your own dedicated node with 10 game server slots",
+                "availability": "https://schema.org/InStock"
+            }
+        ]
+    }
+    </script>
+    
+    <!-- Structured Data: FAQ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is Forge Hosting really free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! Forge offers completely free game server, bot, and web hosting on shared nodes. You can deploy Minecraft, Terraria, and dozens of other servers at no cost. Premium private nodes are available from $12.99/mo for users who need dedicated resources."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What games can I host on Forge?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Forge supports 350+ server eggs including Minecraft (Paper, Forge, Fabric, Bedrock), Terraria, Rust, ARK, Garry's Mod, CS2, Valheim, Palworld, and many more. You can also host Discord bots, websites, databases, and custom applications."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How is Forge different from Pterodactyl or Pelican?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Forge is built on a modern panel with additional features including built-in billing, a node marketplace, ticket system, referral program, Discord integration, announcement system, and a plugin store. It's designed to be a complete hosting platform out of the box."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is a Private Node?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A Private Node is your own dedicated server within the Forge network. Starting at $12.99/mo, you get 10 game server slots with full control. You can add more slots in packs of 5 for $5/mo each."
+                }
+            }
+        ]
+    }
+    </script>
+
+</head>
+<body>
+    <div class="ambient-bg"></div>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="36" height="36" rx="8" fill="url(#g1)"/>
+                    <path d="M10 26V12l8-4 8 4v14l-8 4-8-4z" stroke="#fff" stroke-width="2" fill="none" opacity="0.3"/>
+                    <path d="M18 8v10m-8-2l8 4 8-4" stroke="#fff" stroke-width="2" fill="none"/>
+                    <path d="M14 22l4-6 4 6" stroke="#fb923c" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="g1" x1="0" y1="0" x2="36" y2="36">
+                            <stop stop-color="#f97316"/>
+                            <stop offset="1" stop-color="#ea580c"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Forge</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="https://forged.jarviscli.dev/marketplace">Node Marketplace</a></li>
+                <li><a href="https://discord.gg/forgehosting" target="_blank">Discord</a></li>
+                <li><a href="https://forged.jarviscli.dev" class="btn btn-primary">Open Panel</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'">☰</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                All systems operational
+            </div>
+            <h1>
+                Your servers,<br>
+                <span class="gradient">forged to perfection.</span>
+            </h1>
+            <p>
+                Deploy game servers, bots, websites, and databases in seconds — completely free. 
+                Or get your own private node starting at $12.99/mo.
+            </p>
+            <div class="hero-actions">
+                <a href="https://forged.jarviscli.dev" class="btn btn-primary btn-large">
+                    🔥 Get Started Free
+                </a>
+                <a href="#pricing" class="btn btn-secondary btn-large">
+                    💎 View Pricing
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="number">4</div>
+                    <div class="label">Spark Nodes</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">24/7</div>
+                    <div class="label">Uptime</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">350+</div>
+                    <div class="label">Server Eggs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Features</div>
+                <h2 class="section-title">Everything you need to deploy</h2>
+                <p class="section-subtitle">
+                    A modern hosting platform built from the ground up, with powerful tools and zero compromise.
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Deployment</h3>
+                    <p>Create and launch servers in seconds with our streamlined panel. No complex setup or configuration required.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Game Servers</h3>
+                    <p>Host Minecraft, Terraria, and dozens of other game servers with optimized eggs and one-click installs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Bot Hosting</h3>
+                    <p>Run Discord bots, automation scripts, and background services 24/7 with dedicated resources.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Web & Database</h3>
+                    <p>Deploy websites, APIs, and databases with full Node.js, Python, PHP, and more runtime support.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>Your Own Node</h3>
+                    <p>Buy a private node and run it on your own hardware. One command to install, auto-connects to the panel.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Custom Panel</h3>
+                    <p>Our Forge panel gives you full control with file management, console access, backups, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works" style="background: rgba(15,23,42,0.4);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">How It Works</div>
+                <h2 class="section-title">Deploy in three simple steps</h2>
+                <p class="section-subtitle">
+                    From signup to live server in under a minute.
+                </p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <h3>Create your account</h3>
+                    <p>Sign up through the Forge panel or our Discord bot. Link your account and get started instantly.</p>
+                </div>
+                <div class="step">
+                    <h3>Pick your plan</h3>
+                    <p>Use our free shared nodes, or grab your own private node for full control and dedicated resources.</p>
+                </div>
+                <div class="step">
+                    <h3>Deploy & play</h3>
+                    <p>Choose from 350+ server eggs, deploy with one click, and start building. It's that easy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Pricing</div>
+                <h2 class="section-title">Simple, transparent pricing</h2>
+                <p class="section-subtitle">Start free on shared nodes, or get your own private node.</p>
+            </div>
+
+            <!-- Monthly / Yearly Toggle -->
+            <div class="pricing-toggle">
+                <span id="label-monthly" class="active">Monthly</span>
+                <div class="toggle-switch" id="billing-toggle" onclick="toggleBilling()"></div>
+                <span id="label-yearly">Yearly <span class="save-badge">SAVE 2 MONTHS</span></span>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- FREE -->
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <p class="pricing-desc">Perfect for getting started</p>
+                    <div class="pricing-price"><span class="currency">$</span>0 <span class="period">/ month</span></div>
+                    <p class="pricing-equiv">&nbsp;</p>
+                    <ul class="pricing-features">
+                        <li>Game, Bot & Web servers</li>
+                        <li>Shared Spark nodes</li>
+                        <li>File manager & console</li>
+                        <li>Community support</li>
+                        <li>Automatic backups</li>
+                    </ul>
+                    <a href="https://forged.jarviscli.dev" class="btn btn-secondary">Get Started Free</a>
+                </div>
+
+                <!-- PRIVATE NODE (monthly / yearly) -->
+                <div class="pricing-card featured">
+                    <h3>Private Node</h3>
+                    <p class="pricing-desc">Your own dedicated node</p>
+                    <div class="pricing-price" id="node-price">
+                        <span class="currency">$</span><span id="node-amount">12</span><span id="node-cents" style="font-size:1.5rem;font-weight:700;">.99</span> <span class="period" id="node-period">/ month</span>
+                    </div>
+                    <p class="pricing-equiv" id="node-equiv">&nbsp;</p>
+                    <ul class="pricing-features">
+                        <li>10 game server slots</li>
+                        <li>Dedicated resources</li>
+                        <li>One-click node installer</li>
+                        <li>Auto DNS setup</li>
+                        <li>Full panel access</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="https://forged.jarviscli.dev/marketplace" class="btn btn-primary" id="node-cta">Get Your Node</a>
+                </div>
+
+                <!-- EXTRA SLOTS -->
+                <div class="pricing-card">
+                    <h3>Extra Slots</h3>
+                    <p class="pricing-desc">Add-on for Private Node</p>
+                    <div class="pricing-price" style="color: var(--accent);" id="addon-price">
+                        <span class="currency">$</span><span id="addon-amount">5</span> <span class="period" id="addon-period">/ month</span>
+                    </div>
+                    <p class="pricing-equiv" id="addon-equiv">per 5 additional servers</p>
+                    <ul class="pricing-features">
+                        <li>+5 server slots per pack</li>
+                        <li>Stack as many as you need</li>
+                        <li>Instant activation</li>
+                        <li>Same dedicated resources</li>
+                        <li>No limit on add-ons</li>
+                    </ul>
+                    <a href="https://forged.jarviscli.dev/marketplace" class="btn btn-secondary">Add More Slots</a>
+                </div>
+            </div>
+
+            <div class="addon-note">
+                <p>💡 <strong>Need more than 10 servers?</strong> Add extra 5-server packs to your node at any time. Pay monthly or yearly — yearly saves you 2 months on every pack.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FAQ SECTION -->
+    <section id="faq" style="background: rgba(15,23,42,0.4);">
+        <div class="container" style="padding: 5rem 2rem;">
+            <div style="text-align: center;">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+            <div style="max-width: 700px; margin: 2rem auto 0;">
+                <details style="background: rgba(15,23,42,0.6); border: 1px solid rgba(251,146,60,0.12); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; cursor: pointer;">
+                    <summary style="font-weight: 600; font-size: 1rem; color: #f8fafc; list-style: none; display: flex; justify-content: space-between; align-items: center;">Is Forge Hosting really free?<span style="color: #f97316; font-size: 1.2rem;">+</span></summary>
+                    <p style="margin-top: 1rem; color: #94a3b8; line-height: 1.7;">Yes! Forge offers completely free game server, bot, and web hosting on shared nodes. You can deploy Minecraft, Terraria, and dozens of other servers at no cost. Premium private nodes are available from $12.99/mo for users who need dedicated resources.</p>
+                </details>
+                <details style="background: rgba(15,23,42,0.6); border: 1px solid rgba(251,146,60,0.12); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; cursor: pointer;">
+                    <summary style="font-weight: 600; font-size: 1rem; color: #f8fafc; list-style: none; display: flex; justify-content: space-between; align-items: center;">What games can I host?<span style="color: #f97316; font-size: 1.2rem;">+</span></summary>
+                    <p style="margin-top: 1rem; color: #94a3b8; line-height: 1.7;">Forge supports 350+ server eggs including Minecraft (Paper, Forge, Fabric, Bedrock), Terraria, Rust, ARK, Garry's Mod, CS2, Valheim, Palworld, and many more. You can also host Discord bots, websites, databases, and custom applications.</p>
+                </details>
+                <details style="background: rgba(15,23,42,0.6); border: 1px solid rgba(251,146,60,0.12); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; cursor: pointer;">
+                    <summary style="font-weight: 600; font-size: 1rem; color: #f8fafc; list-style: none; display: flex; justify-content: space-between; align-items: center;">How is Forge different from Pterodactyl or Pelican?<span style="color: #f97316; font-size: 1.2rem;">+</span></summary>
+                    <p style="margin-top: 1rem; color: #94a3b8; line-height: 1.7;">Forge is built on a modern panel with additional features including built-in billing, a node marketplace, ticket system, referral program, Discord integration, announcement system, and a plugin store. It's designed to be a complete hosting platform out of the box.</p>
+                </details>
+                <details style="background: rgba(15,23,42,0.6); border: 1px solid rgba(251,146,60,0.12); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; cursor: pointer;">
+                    <summary style="font-weight: 600; font-size: 1rem; color: #f8fafc; list-style: none; display: flex; justify-content: space-between; align-items: center;">What is a Private Node?<span style="color: #f97316; font-size: 1.2rem;">+</span></summary>
+                    <p style="margin-top: 1rem; color: #94a3b8; line-height: 1.7;">A Private Node is your own dedicated server within the Forge network. Starting at $12.99/mo, you get 10 game server slots with full control. You can add more slots in packs of 5 for $5/mo each. Save even more with annual billing at $129.90/yr.</p>
+                </details>
+                <details style="background: rgba(15,23,42,0.6); border: 1px solid rgba(251,146,60,0.12); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; cursor: pointer;">
+                    <summary style="font-weight: 600; font-size: 1rem; color: #f8fafc; list-style: none; display: flex; justify-content: space-between; align-items: center;">Do I need technical knowledge?<span style="color: #f97316; font-size: 1.2rem;">+</span></summary>
+                    <p style="margin-top: 1rem; color: #94a3b8; line-height: 1.7;">Not at all. Forge's panel is designed to be beginner-friendly. Create a server in 3 clicks — everything from installation to configuration is handled automatically. You get a file manager, live console, and backup system all through a web interface.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-box">
+            <h2>Ready to forge something great?</h2>
+            <p>Join our growing community and deploy your first server in under a minute — or grab your own private node for full control.</p>
+            <div class="hero-actions">
+                <a href="https://forged.jarviscli.dev/marketplace" class="btn btn-primary btn-large">🔥 Get a Private Node</a>
+                <a href="https://forged.jarviscli.dev" class="btn btn-secondary btn-large">🆓 Start Free</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-copy">
+                © 2026 Forge Hosting. All rights reserved.
+            </div>
+            <ul class="footer-links">
+                <li><a href="https://forged.jarviscli.dev">Panel</a></li>
+                <li><a href="https://forged.jarviscli.dev/marketplace">Marketplace</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="https://discord.gg/forgehosting">Discord</a></li>
+                <li><a href="mailto:everest@jarviscli.dev">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        // Pricing toggle
+        let isYearly = false;
+
+        function toggleBilling() {
+            isYearly = !isYearly;
+            const toggle = document.getElementById('billing-toggle');
+            const labelM = document.getElementById('label-monthly');
+            const labelY = document.getElementById('label-yearly');
+
+            toggle.classList.toggle('yearly', isYearly);
+            labelM.classList.toggle('active', !isYearly);
+            labelY.classList.toggle('active', isYearly);
+
+            // Node pricing
+            const nodeAmount = document.getElementById('node-amount');
+            const nodeCents = document.getElementById('node-cents');
+            const nodePeriod = document.getElementById('node-period');
+            const nodeEquiv = document.getElementById('node-equiv');
+
+            // Addon pricing
+            const addonAmount = document.getElementById('addon-amount');
+            const addonPeriod = document.getElementById('addon-period');
+            const addonEquiv = document.getElementById('addon-equiv');
+
+            if (isYearly) {
+                nodeAmount.textContent = '129';
+                nodeCents.textContent = '.90';
+                nodePeriod.textContent = '/ year';
+                nodeEquiv.textContent = 'Just $10.83/mo — save $25.98/yr';
+
+                addonAmount.textContent = '50';
+                addonPeriod.textContent = '/ year';
+                addonEquiv.textContent = 'per 5 servers — save $10/yr';
+            } else {
+                nodeAmount.textContent = '12';
+                nodeCents.textContent = '.99';
+                nodePeriod.textContent = '/ month';
+                nodeEquiv.innerHTML = '&nbsp;';
+
+                addonAmount.textContent = '5';
+                addonPeriod.textContent = '/ month';
+                addonEquiv.textContent = 'per 5 additional servers';
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Nav scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(2, 6, 23, 0.95)';
+            } else {
+                nav.style.background = 'rgba(2, 6, 23, 0.8)';
+            }
+        });
+    </script>
+</body>
+</html>
